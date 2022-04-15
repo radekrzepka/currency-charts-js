@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Konwerter walut</title>
+		<link rel="stylesheet" href="./scss/main.css" />
+	</head>
+	<body>
+		<nav>
+			<a href="converter.html">Konwerter walut</a>
+			<a href="index.html">Kursy walut</a>
+		</nav>
+		<h1>Currencies</h1>
+		<div class="currenciesConverter">
+			<select name="currencies" id="currenciesSelectFirst"></select>
+			<select name="currencies" id="currenciesSelectSecond"></select>
+			<input type="button" value="Calculate" id="calcButton" />
+			<div id="calcResult" class="calcResult"></div>
+		</div>
+		<script src="./js/converter/currencyConverter.js"></script>
+	</body>
+</html>
