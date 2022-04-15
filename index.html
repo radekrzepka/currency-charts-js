@@ -4,22 +4,16 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Currencies</title>
+		<title>Kursy walut</title>
 		<link rel="stylesheet" href="./scss/main.css" />
 	</head>
 	<body>
 		<nav>
-			<p>Konwerter walut</p>
-			<p>Kursy walut</p>
+			<a href="converter.html">Konwerter walut</a>
+			<a href="index.html">Kursy walut</a>
 		</nav>
-		<h1>Currencies</h1>
-		<div class="currenciesCalculator">
-			<select name="currencies" id="currenciesSelectFirst"></select>
-			<select name="currencies" id="currenciesSelectSecond"></select>
-			<input type="button" value="Calculate" id="calcButton" />
-			<div id="calcResult" class="calcResult"></div>
-		</div>
-		<script src="./js/currencyConverter.js"></script>
-		<script src="./js/currencyCharts.js"></script>
+		<h1>Wykresy</h1>
+
+		<script src="./js/charts/currencyCharts.js"></script>
 	</body>
 </html>

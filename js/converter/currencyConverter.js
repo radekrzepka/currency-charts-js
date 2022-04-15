@@ -1,10 +1,10 @@
 const baseUrl = "api.frankfurter.app";
 
 async function getCurrencies() {
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		fetch(`https://${baseUrl}/currencies`)
-			.then((resp) => resp.json())
-			.then((data) => resolve(data));
+			.then(resp => resp.json())
+			.then(data => resolve(data));
 	});
 }
 
@@ -30,12 +30,14 @@ async function getAllRates() {
 		else currenciesUrl += `${key},`;
 		index++;
 	}
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		fetch(currenciesUrl)
-			.then((resp) => resp.json())
-			.then((data) => resolve(data.rates));
+			.then(resp => resp.json())
+			.then(data => resolve(data.rates));
 	});
 }
+
+createSelect();
 
 document.querySelector("#calcButton").addEventListener("click", calculator);
 async function calculator() {
@@ -46,5 +48,3 @@ async function calculator() {
 	let conversion = Math.round((allRates[secondValue] / allRates[firstValue]) * 100) / 100;
 	document.querySelector("#calcResult").innerHTML = `1 ${firstValue} = ${conversion} ${secondValue}`;
 }
-
-createSelect();
