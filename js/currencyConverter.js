@@ -42,6 +42,7 @@ async function calculator() {
 	let firstValue = document.querySelector("#currenciesSelectFirst").value;
 	let secondValue = document.querySelector("#currenciesSelectSecond").value;
 	const allRates = await getAllRates();
+	allRates.EUR = 1;
 	let conversion = Math.round((allRates[secondValue] / allRates[firstValue]) * 100) / 100;
 	document.querySelector("#calcResult").innerHTML = `1 ${firstValue} = ${conversion} ${secondValue}`;
 }
