@@ -24,3 +24,11 @@ export async function getAllRates() {
 			.then(data => resolve(data.rates));
 	});
 }
+
+export async function getCurrencyRates(rate) {
+	return new Promise(resolve => {
+		fetch(`https://${baseUrl}/2019-01-01..?to=${rate}`)
+			.then(resp => resp.json())
+			.then(data => resolve(data.rates));
+	});
+}
