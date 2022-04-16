@@ -13,3 +13,20 @@ nav {
 .calcResult {
 	width: 20%;
 }
+
+main {
+	display: flex;
+}
+
+.table {
+	width: 50%;
+}
+
+.chart {
+	width: 50%;
+}
+
+.showChart {
+	text-decoration: underline;
+	cursor: pointer;
+}

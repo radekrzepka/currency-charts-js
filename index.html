@@ -9,18 +9,26 @@
 		<script src="./js/charts/currencyCharts.js" defer type="module"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 	</head>
-	<body>
+	<body class="body-index">
 		<nav>
 			<a href="converter.html">Konwerter walut</a>
 			<a href="index.html">Kursy walut</a>
 		</nav>
-		<h1>Kursy walut</h1>
-		<h2>W stosunku do PLN</h2>
-		<table class="currencyTable">
-			<tr>
-				<th>Waluta</th>
-				<th>Wartość</th>
-			</tr>
-		</table>
+		<main>
+			<div class="table">
+				<h1>Kursy walut</h1>
+				<h2>W stosunku do Euro</h2>
+				<table class="currencyTable">
+					<tr>
+						<th>Waluta</th>
+						<th>Wartość</th>
+					</tr>
+				</table>
+			</div>
+			<div class="chart">
+				<h2>Wykres <span id="currencyName"></span></h2>
+				<canvas id="chart"></canvas>
+			</div>
+		</main>
 	</body>
 </html>
