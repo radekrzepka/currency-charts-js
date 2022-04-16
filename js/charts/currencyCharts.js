@@ -1,22 +1,43 @@
 import { getAllRates, getCurrencies, getCurrencyRates } from "../apiServices.js";
 
-async function createTable() {
-	const table = document.querySelector(".currencyTable");
+async function createMajorTable() {
+	const table = document.querySelector(".majorCurrencyTable");
 	const allRates = await getAllRates();
 	const allCurrencies = await getCurrencies();
 	for (const currency in allRates) {
-		const newRow = document.createElement("tr");
-		newRow.innerHTML = `
-            <td>${currency} ${allCurrencies[currency]}</td>
-            <td>${Math.round(allRates[currency] * 100) / 100}</td>
-            <td class = 'showChart' id='${currency}'>Pokaż wykres</td>
-        `;
-		table.append(newRow);
+		if (currency == "USD" || currency == "CHF" || currency == "PLN" || currency == "GBP") {
+			const newRow = document.createElement("tr");
+			newRow.innerHTML = `
+				<td>${currency} ${allCurrencies[currency]}</td>
+				<td>${Math.round(allRates[currency] * 100) / 100}</td>
+				<td class = 'showChart' id='${currency}'>Pokaż wykres</td>
+			`;
+			table.append(newRow);
+		}
 	}
 	return document.querySelectorAll(".showChart");
 }
 
-const showChartButtons = await createTable();
+async function createMinorTable() {
+	const table = document.querySelector(".minorCurrencyTable");
+	const allRates = await getAllRates();
+	const allCurrencies = await getCurrencies();
+	for (const currency in allRates) {
+		if (currency != "USD" && currency != "CHF" && currency != "PLN" && currency != "GBP") {
+			const newRow = document.createElement("tr");
+			newRow.innerHTML = `
+				<td>${currency} ${allCurrencies[currency]}</td>
+				<td>${Math.round(allRates[currency] * 100) / 100}</td>
+				<td class = 'showChart' id='${currency}'>Pokaż wykres</td>
+			`;
+			table.append(newRow);
+		}
+	}
+	return document.querySelectorAll(".showChart");
+}
+
+const showChartButtons = [...(await createMajorTable()), ...(await createMinorTable())];
+console.log(showChartButtons);
 
 async function printChart(currency) {
 	const historicalRates = await getCurrencyRates(currency);
