@@ -7,6 +7,8 @@ async function createSelect() {
 		let newCurrency2 = document.createElement("option");
 		newCurrency1.innerHTML = Object.keys(currencies)[x];
 		newCurrency2.innerHTML = Object.keys(currencies)[x];
+		if (x == 8) newCurrency1.selected = "selected";
+		if (x == 24) newCurrency2.selected = "selected";
 		document.querySelector("#currenciesSelectFirst").appendChild(newCurrency1);
 		document.querySelector("#currenciesSelectSecond").appendChild(newCurrency2);
 	}
@@ -17,11 +19,28 @@ createSelect();
 
 const inputNumber = document.querySelector("#currenciesNumber");
 inputNumber.addEventListener("input", replaceWrongCharacters);
-
 async function replaceWrongCharacters() {
-	let result = inputNumber.value.match(/([0-9.])/g);
-	if (result != null) result = result.join("");
-	inputNumber.value = result;
+	let number = inputNumber.value;
+	number = number.replace(/[^0-9?.,]/gm, "");
+	number = String(number);
+	let dotcount = 0;
+	let firstdot = 99;
+	for (let i = 0; i < number.length; i++) {
+		if (number.charAt(i) == "." || number.charAt(i) == ",") {
+			dotcount += 1;
+		}
+	}
+	if (dotcount > 1) {
+		for (let i = 0; i < number.length; i++) {
+			if (number.charAt(i) == "." || number.charAt(i) == ",") {
+				if (i < firstdot) firstdot = i;
+				if (i != firstdot) number = number.slice(0, i) + number.slice(i + 1);
+			}
+		}
+	}
+	number = number.replace(",", ".");
+	inputNumber.value = number;
+	calculator();
 }
 
 const inputCurrencies = document.querySelectorAll("[name='currencies']");
@@ -36,6 +55,23 @@ async function calculator() {
 	if (numberCurr == "") numberCurr = "0";
 	const allRates = await getAllRates(currenciesNumber);
 	allRates.EUR = 1;
-	let conversion = (numberCurr * Math.round((allRates[secondCurr] / allRates[firstCurr]) * 100)) / 100;
-	document.querySelector("#calcResult").innerHTML = `${numberCurr} ${firstCurr} = ${conversion} ${secondCurr}`;
+	let conversion = String((numberCurr * Math.round((allRates[secondCurr] / allRates[firstCurr]) * 100)) / 100);
+	let afterdot = conversion.substr(conversion.indexOf(".") + 1);
+	if (!conversion.includes(".")) {
+		conversion += ".00";
+	}
+	if (afterdot.length == 1) {
+		afterdot += 0;
+	}
+	if (afterdot.length > 2) {
+		afterdot = afterdot / Math.pow(10, afterdot.length - 2);
+		if (afterdot < 99) {
+			afterdot = Math.round(afterdot);
+		} else {
+			afterdot = Math.floor(afterdot);
+		}
+	}
+	let beforedot = conversion.slice(0, conversion.lastIndexOf("."));
+	conversion = beforedot + "." + afterdot;
+	document.querySelector("#calcResult").innerHTML = `${conversion}`;
 }

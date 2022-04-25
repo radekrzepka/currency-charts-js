@@ -13,12 +13,13 @@
 			<a href="converter.html">Konwerter walut</a>
 			<a href="index.html">Kursy walut</a>
 		</nav>
-		<h1>Currencies</h1>
+		<h1>Konwerter</h1>
 		<div class="currenciesConverter">
-			<input name="currencies" type="text" id="currenciesNumber" value="1" min="1" />
-			<select name="currencies" id="currenciesSelectFirst"></select>
-			<select name="currencies" id="currenciesSelectSecond"></select>
-			<div id="calcResult" class="calcResult"></div>
+			<input type="text" id="currenciesNumber" value="1" />
+			<select name="currencies" id="currenciesSelectFirst" class="select noselect"></select>
+			<div class="equal noselect"><b>=</b></div>
+			<select name="currencies" id="currenciesSelectSecond" class="select noselect"></select>
+			<div class="calcResult"><div id="calcResult"></div></div>
 		</div>
 	</body>
 </html>
