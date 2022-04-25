@@ -10,10 +10,6 @@ nav {
 	justify-content: space-evenly;
 }
 
-.calcResult {
-	width: 20%;
-}
-
 main {
 	display: flex;
 	flex-direction: column;
@@ -35,4 +31,62 @@ main {
 .showChart {
 	text-decoration: underline;
 	cursor: pointer;
+}
+.calcResult {
+	width: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.currenciesConverter {
+	display: flex;
+	flex-wrap: wrap;
+	width: 40%;
+}
+.currenciesConverter > * {
+	margin-left: 2em;
+}
+.select {
+	cursor: pointer;
+	padding: 14px 30px;
+	outline: 0;
+	border: 0px solid #000000;
+	border-radius: 14px;
+	background: #e6e6e6;
+	color: #7b7b7b;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+.break {
+	flex-basis: 100%;
+}
+#currenciesNumber {
+	width: 20%;
+	text-align: center;
+}
+.equal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently}*/
 }
