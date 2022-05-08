@@ -21,10 +21,10 @@ const inputNumber = document.querySelector("#currenciesNumber");
 inputNumber.addEventListener("input", replaceWrongCharacters);
 async function replaceWrongCharacters() {
 	let number = inputNumber.value;
-	number = number.replace(/[^0-9?.,]/gm, "");
+	number = number.replace(/[^0-9.,]/gm, "");
 	number = String(number);
 	let dotcount = 0;
-	let firstdot = 99;
+	let firstdot = 14;
 	for (let i = 0; i < number.length; i++) {
 		if (number.charAt(i) == "." || number.charAt(i) == ",") {
 			dotcount += 1;
@@ -65,7 +65,7 @@ async function calculator() {
 	}
 	if (afterdot.length > 2) {
 		afterdot = afterdot / Math.pow(10, afterdot.length - 2);
-		if (afterdot < 99) {
+		if (afterdot < 14) {
 			afterdot = Math.round(afterdot);
 		} else {
 			afterdot = Math.floor(afterdot);
@@ -73,5 +73,6 @@ async function calculator() {
 	}
 	let beforedot = conversion.slice(0, conversion.lastIndexOf("."));
 	conversion = beforedot + "." + afterdot;
+	if (conversion == "NaN.NaN") conversion = "0.00";
 	document.querySelector("#calcResult").innerHTML = `${conversion}`;
 }
