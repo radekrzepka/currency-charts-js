@@ -21,10 +21,10 @@ const inputNumber = document.querySelector("#currenciesNumber");
 inputNumber.addEventListener("input", replaceWrongCharacters);
 async function replaceWrongCharacters() {
 	let number = inputNumber.value;
-	number = number.replace(/[^0-9?.,]/gm, "");
+	number = number.replace(/[^0-9.,]/gm, "");
 	number = String(number);
 	let dotcount = 0;
-	let firstdot = 99;
+	let firstdot = 12;
 	for (let i = 0; i < number.length; i++) {
 		if (number.charAt(i) == "." || number.charAt(i) == ",") {
 			dotcount += 1;
@@ -39,7 +39,23 @@ async function replaceWrongCharacters() {
 		}
 	}
 	number = number.replace(",", ".");
+
+	if (number.includes(".")) {
+		let originalBeforeDot = parseInt(number.slice(0, number.lastIndexOf(".")));
+		let originalAfterDot = number.substr(number.indexOf("."));
+		number = originalBeforeDot + originalAfterDot;
+		if (originalBeforeDot != 0) {
+			originalBeforeDot = parseInt(originalBeforeDot);
+		}
+	} else if (number != 0) {
+		number = parseInt(number);
+	}
+
 	inputNumber.value = number;
+
+	if (inputNumber.value == "") {
+		document.querySelector("#currenciesNumber").value = "0";
+	}
 	calculator();
 }
 
@@ -59,19 +75,23 @@ async function calculator() {
 	let afterdot = conversion.substr(conversion.indexOf(".") + 1);
 	if (!conversion.includes(".")) {
 		conversion += ".00";
+		afterdot = "00";
 	}
 	if (afterdot.length == 1) {
 		afterdot += 0;
 	}
 	if (afterdot.length > 2) {
 		afterdot = afterdot / Math.pow(10, afterdot.length - 2);
-		if (afterdot < 99) {
+		if (afterdot < 12) {
 			afterdot = Math.round(afterdot);
 		} else {
 			afterdot = Math.floor(afterdot);
 		}
 	}
 	let beforedot = conversion.slice(0, conversion.lastIndexOf("."));
-	conversion = beforedot + "." + afterdot;
+	if (numberCurr) conversion = beforedot + "." + afterdot;
+	if (conversion == "NaN.NaN") {
+		// conversion = "0.00";
+	}
 	document.querySelector("#calcResult").innerHTML = `${conversion}`;
 }
