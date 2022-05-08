@@ -134,6 +134,8 @@ body main h1 {
 .currenciesConverter #currenciesNumber {
   width: 20%;
   text-align: center;
+  background-color: #dfdfdf;
+  border: 1px solid #7b7b7b;
 }
 
 .currenciesConverter ::-webkit-scrollbar {

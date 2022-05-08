@@ -39,6 +39,7 @@ async function replaceWrongCharacters() {
 		}
 	}
 	number = number.replace(",", ".");
+
 	if (number.includes(".")) {
 		let originalBeforeDot = parseInt(number.slice(0, number.lastIndexOf(".")));
 		let originalAfterDot = number.substr(number.indexOf("."));
@@ -49,6 +50,7 @@ async function replaceWrongCharacters() {
 	} else if (number != 0) {
 		number = parseInt(number);
 	}
+
 	inputNumber.value = number;
 
 	if (inputNumber.value == "") {
@@ -73,6 +75,7 @@ async function calculator() {
 	let afterdot = conversion.substr(conversion.indexOf(".") + 1);
 	if (!conversion.includes(".")) {
 		conversion += ".00";
+		afterdot = "00";
 	}
 	if (afterdot.length == 1) {
 		afterdot += 0;
