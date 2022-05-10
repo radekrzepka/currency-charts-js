@@ -7,6 +7,7 @@
 		<title>Konwerter walut</title>
 		<link rel="stylesheet" href="./scss/main.css" />
 		<script src="./js/converter/currencyConverter.js" defer type="module"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -17,13 +18,20 @@
 				<a href="index.html">Kursy walut</a>
 			</div>
 		</nav>
-		<h1>Konwerter</h1>
-		<div class="currenciesConverter">
-			<input type="text" id="currenciesNumber" value="1" maxlength="12" />
-			<select name="currencies" id="currenciesSelectFirst" class="select noselect"></select>
-			<div class="equal noselect"><b>=</b></div>
-			<select name="currencies" id="currenciesSelectSecond" class="select noselect"></select>
-			<div class="calcResult"><div id="calcResult"></div></div>
+		<div class="container">
+			<div class="currenciesConverter">
+				<h1>Konwerter</h1>
+				<div class="break"></div>
+				<input type="text" id="currenciesNumber" value="1" maxlength="12" />
+				<select name="currencies" id="currenciesSelectFirst" class="select noselect"></select>
+				<div class="equal noselect"><b>=</b></div>
+				<select name="currencies" id="currenciesSelectSecond" class="select noselect"></select>
+				<div class="calcResult"><div id="calcResult"></div></div>
+			</div>
+			<div class="break"></div>
+			<div class="chartContainer noselect">
+				<canvas id="chart"></canvas>
+			</div>
 		</div>
 	</body>
 </html>

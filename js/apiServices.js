@@ -32,3 +32,10 @@ export async function getCurrencyRates(rate) {
 			.then(data => resolve(data.rates));
 	});
 }
+export async function getRatesByDate(date) {
+	return new Promise(resolve => {
+		fetch(`https://${baseUrl}/${date}`)
+			.then(resp => resp.json())
+			.then(data => resolve(data.rates));
+	});
+}

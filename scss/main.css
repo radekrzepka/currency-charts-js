@@ -12,7 +12,7 @@ body {
 
 body nav {
   width: 100%;
-  height: 3em;
+  height: 4vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,10 +76,26 @@ body main h1 {
 }
 
 .currenciesConverter > * {
-  margin-left: 2em;
+  margin: 0 auto;
 }
 
-.currenciesConverter {
+.container {
+  width: 100vw;
+  height: 76vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.container .currenciesConverter {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -88,7 +104,13 @@ body main h1 {
   width: 40%;
 }
 
-.currenciesConverter .calcResult {
+.container .currenciesConverter h1 {
+  color: #383838;
+  margin-bottom: 3vw;
+  font-size: 1.9em;
+}
+
+.container .currenciesConverter .calcResult {
   width: 10%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -101,12 +123,7 @@ body main h1 {
           justify-content: center;
 }
 
-.currenciesConverter .break {
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
-}
-
-.currenciesConverter .equal {
+.container .currenciesConverter .equal {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -118,8 +135,7 @@ body main h1 {
           justify-content: center;
 }
 
-.currenciesConverter .select {
-  cursor: pointer;
+.container .currenciesConverter .select {
   padding: 14px 30px;
   outline: 0;
   border: 0px solid #000000;
@@ -131,30 +147,30 @@ body main h1 {
   -moz-appearance: none;
 }
 
-.currenciesConverter #currenciesNumber {
+.container .currenciesConverter #currenciesNumber {
   width: 20%;
   text-align: center;
   background-color: #dfdfdf;
   border: 1px solid #7b7b7b;
 }
 
-.currenciesConverter ::-webkit-scrollbar {
+.container .currenciesConverter ::-webkit-scrollbar {
   width: 10px;
 }
 
-.currenciesConverter ::-webkit-scrollbar-track {
+.container .currenciesConverter ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-.currenciesConverter ::-webkit-scrollbar-thumb {
+.container .currenciesConverter ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-.currenciesConverter ::-webkit-scrollbar-thumb:hover {
+.container .currenciesConverter ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-.currenciesConverter .noselect {
+.container .currenciesConverter .noselect {
   -webkit-touch-callout: none;
   /* iOS Safari */
   -webkit-user-select: none;
@@ -166,5 +182,15 @@ body main h1 {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, currently}*/
+}
+
+.container .chartContainer {
+  height: 40vh;
+  width: 40vw;
+}
+
+.break {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
 }
 /*# sourceMappingURL=main.css.map */
