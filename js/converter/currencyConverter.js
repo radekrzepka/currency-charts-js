@@ -106,15 +106,16 @@ async function calculator() {
 
 async function variablesForChart() {
 	const dateNow = new Date();
-	let month = dateNow.getMonth();
 	let year = dateNow.getYear() + 1900;
+	let month = dateNow.getMonth();
+	let day = dateNow.getDate();
 	const monthsInPolish = ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"];
 	window.lastMonths = [];
 	let wasYearChanged = false;
 	let wasIndexChanged = false;
 	window.allConversionsByDates = [];
 	for (let x = 11; x >= 0; x--) {
-		let index = month - x;
+		window.index = month - x;
 		if (index < 0) {
 			index = index + 12;
 			if (!wasYearChanged) {
@@ -132,9 +133,9 @@ async function variablesForChart() {
 			index = "0" + index;
 			if (index == "00") index = "12";
 		}
-		let thisDate = year + "-" + index + "-01";
-		allConversionsByDates[x] = await getRatesByDate(thisDate);
-		allConversionsByDates[x].EUR = 1;
+		let thisDate = year + "-" + index + "-" + day;
+		allConversionsByDates[11 - x] = await getRatesByDate(thisDate);
+		allConversionsByDates[11 - x].EUR = 1;
 	}
 }
 let hasChartBeenGenerated = false;
@@ -142,6 +143,7 @@ function chart(firstCurr, secondCurr, number) {
 	let conversions = [];
 	for (let x = 0; x <= 11; x++) {
 		conversions[x] = String((number * Math.round((allConversionsByDates[x][secondCurr] / allConversionsByDates[x][firstCurr]) * 100)) / 100);
+		// console.log(x);
 		let afterDot = conversions[x].substr(conversions[x].indexOf(".") + 1);
 		if (!conversions[x].includes(".")) {
 			conversions[x] += ".00";
