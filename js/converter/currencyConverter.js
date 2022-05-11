@@ -30,7 +30,7 @@ async function replaceWrongCharacters() {
 	number = number.replace(/[^0-9.,]/gm, "");
 	number = String(number);
 	let dotCount = 0;
-	let firstDot = 12;
+	let firstDotIndex = 12;
 	for (let i = 0; i < number.length; i++) {
 		if (number.charAt(i) == "." || number.charAt(i) == ",") {
 			dotCount += 1;
@@ -39,14 +39,12 @@ async function replaceWrongCharacters() {
 	if (dotCount > 1) {
 		for (let i = 0; i < number.length; i++) {
 			if (number.charAt(i) == "." || number.charAt(i) == ",") {
-				if (i < firstDot) firstDot = i;
-				if (i != firstDot) number = number.slice(0, i) + number.slice(i + 1);
+				if (i < firstDotIndex) firstDotIndex = i;
+				if (i != firstDotIndex) number = number.slice(0, i) + number.slice(i + 1);
 			}
 		}
 	}
-
 	number = number.replace(",", ".");
-
 	if (number.includes(".")) {
 		let originalBeforeDot = parseInt(number.slice(0, number.lastIndexOf(".")));
 		let originalAfterDot = number.substr(number.indexOf("."));
@@ -66,18 +64,25 @@ async function replaceWrongCharacters() {
 
 	calculator();
 }
-
 const inputCurrencies = document.querySelectorAll("[name='currencies']");
 for (let x = 0; x < inputCurrencies.length; x++) {
 	inputCurrencies[x].addEventListener("change", calculator);
 }
-
 async function calculator() {
 	let firstCurr = document.querySelector("#currenciesSelectFirst").value;
 	let secondCurr = document.querySelector("#currenciesSelectSecond").value;
 	let numberCurr = document.querySelector("#currenciesNumber").value;
 	if (numberCurr == "") numberCurr = "0";
-	let conversion = String((numberCurr * Math.round((allRates[secondCurr] / allRates[firstCurr]) * 100)) / 100);
+
+	document.querySelector("#calcResult").innerHTML = conversion(firstCurr, secondCurr, numberCurr, allRates);
+	if (!hasVariablesBeenAwaited) {
+		await variablesForChart();
+		hasVariablesBeenAwaited = true;
+	}
+	chart(firstCurr, secondCurr, numberCurr);
+}
+function conversion(firstCurr, secondCurr, numberCurr, Rate) {
+	let conversion = String((numberCurr * Math.round((Rate[secondCurr] / Rate[firstCurr]) * 100)) / 100);
 	let afterDot = conversion.substr(conversion.indexOf(".") + 1);
 	if (!conversion.includes(".")) {
 		conversion += ".00";
@@ -88,22 +93,11 @@ async function calculator() {
 	}
 	if (afterDot.length > 2) {
 		afterDot = afterDot / Math.pow(10, afterDot.length - 2);
-		if (afterDot < 12) {
-			afterDot = Math.round(afterDot);
-		} else {
-			afterDot = Math.floor(afterDot);
-		}
+		afterDot = afterDOt < 12 ? Math.round(afterDot) : Math.floor(afterDot);
 	}
 	let beforeDot = conversion.slice(0, conversion.lastIndexOf("."));
-	if (numberCurr) conversion = beforeDot + "." + afterDot;
-	document.querySelector("#calcResult").innerHTML = `${conversion}`;
-	if (!hasVariablesBeenAwaited) {
-		await variablesForChart();
-		hasVariablesBeenAwaited = true;
-	}
-	chart(firstCurr, secondCurr, numberCurr);
+	return beforeDot + "." + afterDot;
 }
-
 async function variablesForChart() {
 	const dateNow = new Date();
 	let year = dateNow.getYear() + 1900;
@@ -138,30 +132,13 @@ async function variablesForChart() {
 		allConversionsByDates[11 - x].EUR = 1;
 	}
 }
+
 let hasChartBeenGenerated = false;
-function chart(firstCurr, secondCurr, number) {
+function chart(firstCurr, secondCurr, numberCurr) {
 	let conversions = [];
 	for (let x = 0; x <= 11; x++) {
-		conversions[x] = String((number * Math.round((allConversionsByDates[x][secondCurr] / allConversionsByDates[x][firstCurr]) * 100)) / 100);
-		// console.log(x);
-		let afterDot = conversions[x].substr(conversions[x].indexOf(".") + 1);
-		if (!conversions[x].includes(".")) {
-			conversions[x] += ".00";
-			afterDot = "00";
-		}
-		if (afterDot.length == 1) {
-			afterDot += 0;
-		}
-		if (afterDot.length > 2) {
-			afterDot = afterDot / Math.pow(10, afterDot.length - 2);
-			if (afterDot < 12) {
-				afterDot = Math.round(afterDot);
-			} else {
-				afterDot = Math.floor(afterDot);
-			}
-		}
+		conversions[x] = conversion(firstCurr, secondCurr, numberCurr, allConversionsByDates[x]);
 	}
-
 	let data = conversions;
 	let label = firstCurr + " w porównaniu do " + secondCurr;
 	let bgcolor = "rgba(0, 160, 0, .4)";
@@ -172,7 +149,7 @@ function chart(firstCurr, secondCurr, number) {
 	function generateChart() {
 		hasChartBeenGenerated = true;
 		window.mychart = new Chart(ctx, {
-			type: "bar",
+			type: "line",
 			data: {
 				labels: labels,
 				datasets: [
