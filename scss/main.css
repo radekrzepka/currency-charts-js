@@ -44,6 +44,7 @@ body main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-bottom: 5vh;
 }
 
 body main h1 {
@@ -187,6 +188,22 @@ body main h1 {
 .container .chartContainer {
   height: 40vh;
   width: 40vw;
+}
+
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: #e6e6e6;
+  border-top: #7b7b7b 1px solid;
+  height: 4vh;
+  text-align: right;
+  font-size: 2em;
+}
+
+.footer a {
+  color: #7b7b7b;
+  text-decoration: none;
 }
 
 .break {
