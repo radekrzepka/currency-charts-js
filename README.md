@@ -1,5 +1,5 @@
 # 🚧Work in progress🚧
-# currency_charts
+# Currency charts
 
 ## Technologies
 - HTML & Sass
