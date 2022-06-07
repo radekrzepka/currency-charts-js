@@ -14,8 +14,12 @@ async function createSelect() {
 			newCurrency2.innerHTML = Object.keys(currencies)[x];
 			if (x == 8) newCurrency1.selected = "selected";
 			if (x == 24) newCurrency2.selected = "selected";
-			document.querySelector("#currenciesSelectFirst").appendChild(newCurrency1);
-			document.querySelector("#currenciesSelectSecond").appendChild(newCurrency2);
+			document
+				.querySelector("#currenciesSelectFirst")
+				.appendChild(newCurrency1);
+			document
+				.querySelector("#currenciesSelectSecond")
+				.appendChild(newCurrency2);
 		}
 	}
 	calculator();
@@ -40,7 +44,8 @@ async function replaceWrongCharacters() {
 		for (let i = 0; i < number.length; i++) {
 			if (number.charAt(i) == "." || number.charAt(i) == ",") {
 				if (i < firstDotIndex) firstDotIndex = i;
-				if (i != firstDotIndex) number = number.slice(0, i) + number.slice(i + 1);
+				if (i != firstDotIndex)
+					number = number.slice(0, i) + number.slice(i + 1);
 			}
 		}
 	}
@@ -74,7 +79,12 @@ async function calculator() {
 	let numberCurr = document.querySelector("#currenciesNumber").value;
 	if (numberCurr == "") numberCurr = "0";
 
-	document.querySelector("#calcResult").innerHTML = conversion(firstCurr, secondCurr, numberCurr, allRates);
+	document.querySelector("#calcResult").innerHTML = conversion(
+		firstCurr,
+		secondCurr,
+		numberCurr,
+		allRates
+	);
 	if (!hasVariablesBeenAwaited) {
 		await variablesForChart();
 		hasVariablesBeenAwaited = true;
@@ -82,7 +92,9 @@ async function calculator() {
 	chart(firstCurr, secondCurr, numberCurr);
 }
 function conversion(firstCurr, secondCurr, numberCurr, Rate) {
-	let conversion = String((numberCurr * Math.round((Rate[secondCurr] / Rate[firstCurr]) * 100)) / 100);
+	let conversion = String(
+		(numberCurr * Math.round((Rate[secondCurr] / Rate[firstCurr]) * 100)) / 100
+	);
 	let afterDot = conversion.substr(conversion.indexOf(".") + 1);
 	if (!conversion.includes(".")) {
 		conversion += ".00";
@@ -103,7 +115,23 @@ async function variablesForChart() {
 	let year = dateNow.getYear() + 1900;
 	let month = dateNow.getMonth();
 	let day = dateNow.getDate();
-	const monthsInPolish = ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"];
+	if (day <= 9) {
+		day = String(day).padStart(2, "0");
+	}
+	const monthsInPolish = [
+		"styczeń",
+		"luty",
+		"marzec",
+		"kwiecień",
+		"maj",
+		"czerwiec",
+		"lipiec",
+		"sierpień",
+		"wrzesień",
+		"październik",
+		"listopad",
+		"grudzień",
+	];
 	window.lastMonths = [];
 	let wasYearChanged = false;
 	let wasIndexChanged = false;
@@ -128,6 +156,7 @@ async function variablesForChart() {
 			if (index == "00") index = "12";
 		}
 		let thisDate = year + "-" + index + "-" + day;
+		console.log(thisDate);
 		allConversionsByDates[11 - x] = await getRatesByDate(thisDate);
 		allConversionsByDates[11 - x].EUR = 1;
 	}
@@ -137,13 +166,17 @@ let hasChartBeenGenerated = false;
 function chart(firstCurr, secondCurr, numberCurr) {
 	let conversions = [];
 	for (let x = 0; x <= 11; x++) {
-		conversions[x] = conversion(firstCurr, secondCurr, numberCurr, allConversionsByDates[x]);
+		conversions[x] = conversion(
+			firstCurr,
+			secondCurr,
+			numberCurr,
+			allConversionsByDates[x]
+		);
 	}
 	let data = conversions;
 	let label = firstCurr + " w porównaniu do " + secondCurr;
 	let bgcolor = "rgba(0, 160, 0, .4)";
 	let labels = lastMonths;
-
 	const ctx = document.querySelector("#chart").getContext("2d");
 	if (hasChartBeenGenerated) destroyChart();
 	function generateChart() {
