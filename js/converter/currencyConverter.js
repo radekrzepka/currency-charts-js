@@ -156,7 +156,6 @@ async function variablesForChart() {
 			if (index == "00") index = "12";
 		}
 		let thisDate = year + "-" + index + "-" + day;
-		console.log(thisDate);
 		allConversionsByDates[11 - x] = await getRatesByDate(thisDate);
 		allConversionsByDates[11 - x].EUR = 1;
 	}
